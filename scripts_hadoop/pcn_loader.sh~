@@ -1,0 +1,78 @@
+
+#Aussuming that the files are as follows
+#/backup/PCN/pcndata/20110713_10.124.157.18_PCN_CDR.csv.gz
+#folders="pcndata pcndata01"
+__author__="nitin p kumar"
+
+FAIL="99"
+time=`echo $(date) | awk '{print $4}'`
+LOG="pcnlogger_$time"
+echo $(date) >> $LOG
+
+
+if [ $# -eq "0" ]; then
+        echo "Usage: pcn_loader <pass folder paths as args>"
+        exit $FAIL
+else
+        folders="$*"
+        for t in $folders
+        do
+                if [ -d $t ]; then
+                :
+                else
+                echo "Folder does not exist"
+                echo "Usage: pcn_loader <pass folder paths as args>"
+                exit $FAIL
+                fi
+        done
+fi
+
+for folder in $folders
+do
+        ### delete folders of zero size from the given folders
+                find ${folder}/ -size 0 -exec rm -rf {} \;
+for file in `ls $folder`
+do
+
+        created_date=`echo $file | awk -F '_' '{print $1}'`
+        m=`echo ${created_date:4:2}`
+
+                if [ $m = '01' ]; then
+                        monyear="jan2011"
+                elif [ $m = '02' ]; then
+                        monyear="feb2011"
+                elif [ $m = '03' ]; then
+                        monyear="mar2011"
+                elif [ $m = '04' ]; then
+                        monyear="apr2011"
+                elif [ $m = '05' ]; then
+                        monyear="may2011"
+                elif [ $m = '06' ]; then
+                        monyear="jun2011"
+                elif [ $m = '07' ]; then
+                        monyear="jul2011"
+                elif [ $m = '08' ]; then
+                        monyear="aug2011"
+                elif [ $m = '09' ]; then
+                        monyear="sep2011"
+                elif [ $m = '10' ]; then
+                        monyear="oct2011"
+                elif [ $m = '11' ]; then
+                        monyear="nov2011"
+                elif [ $m = '12' ]; then
+                        monyear="dec2011"
+                else
+                     echo "Exception!"
+                fi
+
+        gunzip $folder/$file
+        myfile=`ls $folder/*.csv`
+        echo $myfile >> $LOG
+        hive -e "load data local inpath '$myfile' into table pcn_text partition(operator='tata',monyear='$monyear',created_date='$created_date')" >> $LOG
+        gzip $folder/*.csv
+done
+done
+
+echo "Done!" >> $LOG
+
+
