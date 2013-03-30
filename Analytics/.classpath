@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/hive-jdbc-0.9.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/antlr-runtime-3.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/commons-logging-api-1.0.4.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/derby-10.4.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/hadoop-0.20.2-core.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/hive-exec-0.9.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/hive-metastore-0.9.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/hive-service-0.9.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/jdo2-api-2.3-ec.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/libfb303.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="D:/Documents and Settings/nitin2.kumar/Desktop/hive/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

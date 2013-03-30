@@ -1,0 +1,63 @@
+#
+#dump counts of records
+#obd monitoring
+#<nitin2.kumar@one97.net>
+#
+
+#kill -9 `ps -ef | grep "sh dump_counts.sh" | awk 'NR < 2' | awk '{print $2}'`
+
+monyear=`date +'%b%y' --date='1 month ago' | tr "[:upper:]" "[:lower:]"`
+
+operator="uninor"
+user="root"
+pass=""
+db="dw_obd"
+#monyear="dec11"
+
+table_list=`mysql -u${user} --password=${pass} $db --skip-column-names -e "show tables like 'outlog_wave____${monyear}'"`
+
+if [ -f ${operator}_count.txt ];then rm ${operator}_count.txt; fi
+
+for table in $table_list
+do
+        echo $table >> ${operator}_count.txt
+        mysql -u${user} --password=${pass} $db -e "select count(*), call_date from $table group by 2" >> ${operator}_count.txt
+done
+
+############## hadoop obd monitoring ###############
+#0 6 3 * * sh /home/idea/dump_counts.sh
+
+
+for i in `ls ocmp*.csv.gz`
+do
+    gunzip $i
+    loadfile=`ls *.csv`
+    c=`echo $i | awk -F '_' '{print $3}'`
+    m=`echo $i | awk -F '_' '{print substr($4,0,3)}'`
+    echo "hive -e \"load data local inpath '$loadfile' into table airtel_iffco_obd_text partition (circle='$c', monyear='${m}2011')\""
+    hive -e "load data local inpath '$loadfile' into table airtel_iffco_obd_text partition (circle='$c', monyear='${m}2011')"
+    gzip *.csv
+done
+
+mylist="callbacklog.csv.gz tbl_recording_master.csv.gz tbl_subscriber_master.csv.gz tbl_valid_recordingani.csv.gz"
+for i in $mylist
+do
+        gunzip $i
+        tname=`echo $i | awk -F '.' '{print $1}'`
+        hive -e "load data local inpath '${tname}.csv' into table airtel_iffco_${tname}"
+done
+
+
+arpu_tata_dw_arpu_40_successlog_52222_201_Dec2011.csv.gz
+arpu_tata_dw_arpu_40_applog_52222_201_Dec2011.csv.gz
+
+for i in `ls *.gz`
+do
+    table=`echo $i | awk -F '_' '{print arpu_$6_text}'`
+    application=`echo $i | awk -F '_' '{print $7}'`
+    monyear=`echo $i | awk -F '_' '{print tolower($9)}' | awk -F '.' '{print $1}'`
+#    gunzip $i
+    loadfile=`ls *.csv`
+    echo "hive -e \"load data local inpath '$loadfile' into table $table partition (operator='tata', application='$application', monyear='$monyear')\""
+#    gzip *.csv
+done
